@@ -1,11 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/*
-一些问题：
-1.目前符号位扩展好像是扩到32位(好像没啥问题)
-2.注意检查do_order调用的时候形参实参位置是否一致
-*/
 int clk=0;
 unsigned pc;
 unsigned reg[32];//register
@@ -95,7 +90,6 @@ bool beq(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const un
         return true;
     }
     else return false;
-    //else pc+=4;//do not forget this branch!!
 }
 
 bool bne(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
@@ -105,7 +99,6 @@ bool bne(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const un
         return true;
     }
     else return false;
-    //else pc+=4;
 }
 
 bool blt(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
@@ -115,7 +108,6 @@ bool blt(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const un
         return true;
     }
     else return false;
-    //else pc+=4;
 }
 
 bool bge(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
@@ -125,7 +117,6 @@ bool bge(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const un
         return true;
     }
     else return false;
-    //else pc+=4;
 }
 
 bool bltu(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
@@ -135,7 +126,6 @@ bool bltu(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const u
         return true;
     }
     else return false;
-    //else pc+=4;
 }
 
 bool bgeu(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
@@ -145,7 +135,6 @@ bool bgeu(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const u
         return true;
     }
     else return false;
-    //else pc+=4;
 }
 
 void lb(const unsigned &imm,const unsigned &rv1,unsigned &pos)
@@ -173,7 +162,7 @@ void lhu(const unsigned &imm,const unsigned &rv1,unsigned &pos)
     pos=rv1+sext(imm,0,11);
 }
 
-void sb(const unsigned &imm,const unsigned &rv1,unsigned &pos)//好像不用先给val
+void sb(const unsigned &imm,const unsigned &rv1,unsigned &pos)
 {
     pos=rv1+sext(imm,0,11);
 }
@@ -540,7 +529,6 @@ void ID()
     ID_EX_BUFFER.ins=ins,ID_EX_BUFFER.IA=IN_ID.IA;
 
     ID_EX_BUFFER.flag=true;
-    //if (not_do_IF) IF_ID_BUFFER.flag=false;
 }
 
 void EX()
@@ -617,7 +605,6 @@ void EX()
     EX_MEM_BUFFER.IA=IA;
 
     EX_MEM_BUFFER.flag=true;
-    //if (!IN_ID.flag) ID_EX_BUFFER.flag=false;
 }
 
 void MEM()
@@ -669,7 +656,6 @@ void MEM()
     MEM_WB_BUFFER.IA=IA;
 
     MEM_WB_BUFFER.flag=true;
-    //if (!IN_EX.flag) EX_MEM_BUFFER.flag=false;
 }
 
 void WB()
@@ -683,7 +669,6 @@ void WB()
         case SLT:case SLTU:case XOR:case SRL:case SRA:case OR:case AND:
         store_to_reg(ins.rd,VAL);break;
     }
-    //if (!IN_MEM.flag) MEM_WB_BUFFER.flag=false;
 }
 
 void bubble()
@@ -752,8 +737,6 @@ void run_order() {
 
 int main()
 {
-    freopen("C:\\Users\\rainforest\\Desktop\\testcases\\magic.data", "r", stdin);
-    freopen("C:\\Users\\rainforest\\Desktop\\out.txt", "w", stdout);
     read_order();
     run_order();
     printf("%u\n",reg[10]&255u);
