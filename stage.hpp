@@ -5,7 +5,8 @@
 #include "instruction.hpp"
 #include "stage_ins.hpp"
 #include "forwarding.hpp"
-
+#include "predictor.hpp"
+//pc是不是不要直接在MEM里面改？如果改了IF和MEM执行的顺序就有依赖关系了
 
 bool IF()
 {
@@ -13,7 +14,7 @@ bool IF()
     if (s==(int)0x0ff00513) return false;
     unsigned IA=get_pc();
     //记得把二位饱和预测加到这里！！！！！！！！！！！
-    pc+=4;
+    predictPC(IA,s);
     IF_ID_BUFFER.flag=true;
     IF_ID_BUFFER.INS=s,IF_ID_BUFFER.IA=IA;
     return true;
@@ -126,20 +127,20 @@ void MEM()
     unsigned TA=IN_MEM.TA;
     switch (ins.ins_type) {
         case JAL:case JALR:{
-            change_pc(TA);
-            if (IN_EX.IA!=pc) {
+            if (IN_EX.IA!=TA) {
                 del_ins_now();
+                MEM_WB_BUFFER.NEED_TO_CHANGE_TA=true;
                 not_do_IF=false;
             }
             break;
         }
         case BEQ:case BNE:case BLT:case BGE:case BLTU:case BGEU:{
-            if (ins.is_branch) {
-                change_pc(TA);
-                if (IN_EX.IA!=pc) {
-                    del_ins_now();
-                    not_do_IF=false;
-                }
+            bool is_succ=IN_EX.IA==TA;
+            update(is_succ,ins.is_branch,IA,TA);
+            if (IN_EX.IA!=TA) {
+                del_ins_now();
+                MEM_WB_BUFFER.NEED_TO_CHANGE_TA=true;
+                not_do_IF=false;
             }
             break;
         }
@@ -165,6 +166,7 @@ void MEM()
     MEM_WB_BUFFER.ins=ins;
     MEM_WB_BUFFER.VAL=VAL;
     MEM_WB_BUFFER.IA=IA;
+    MEM_WB_BUFFER.TA=TA;
 
     MEM_WB_BUFFER.flag=true;
 }
@@ -184,10 +186,14 @@ void WB()
 
 void syn()
 {
+    if (MEM_WB_BUFFER.NEED_TO_CHANGE_TA) {
+        change_pc(MEM_WB_BUFFER.TA);
+    }
     IN_ID=IF_ID_BUFFER;
     IN_EX=ID_EX_BUFFER;
     IN_MEM=EX_MEM_BUFFER;
     IN_WB=MEM_WB_BUFFER;
+    MEM_WB_BUFFER.NEED_TO_CHANGE_TA=false;
     if (not_do_IF) IF_ID_BUFFER.flag=false;
     if (!IN_ID.flag) ID_EX_BUFFER.flag=false;
     if (!IN_EX.flag) EX_MEM_BUFFER.flag=false;

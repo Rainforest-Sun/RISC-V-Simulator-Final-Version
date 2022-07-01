@@ -23,9 +23,8 @@ struct EX_MEM_BUFFER_CLASS {
 
 struct MEM_WB_BUFFER_CLASS {
     INSTRUCTION ins;
-    unsigned VAL;
-    unsigned IA;
-    bool flag;
+    unsigned VAL,IA,TA;
+    bool flag,NEED_TO_CHANGE_TA;
 } MEM_WB_BUFFER,IN_WB;
 
 #endif

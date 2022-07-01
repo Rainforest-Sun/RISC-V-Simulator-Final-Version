@@ -32,7 +32,10 @@ bool beq(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const un
         TA=IA+sext(offset,0,12);
         return true;
     }
-    else return false;
+    else {
+        TA=IA+4;
+        return false;
+    }
 }
 
 bool bne(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
@@ -41,7 +44,10 @@ bool bne(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const un
         TA=IA+sext(offset,0,12);
         return true;
     }
-    else return false;
+    else {
+        TA=IA+4;
+        return false;
+    }
 }
 
 bool blt(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
@@ -50,7 +56,10 @@ bool blt(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const un
         TA=IA+sext(offset,0,12);//note should convert unsigned to int
         return true;
     }
-    else return false;
+    else {
+        TA=IA+4;
+        return false;
+    }
 }
 
 bool bge(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
@@ -59,7 +68,10 @@ bool bge(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const un
         TA=IA+sext(offset,0,12);//note should convert unsigned to int
         return true;
     }
-    else return false;
+    else {
+        TA=IA+4;
+        return false;
+    }
 }
 
 bool bltu(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
@@ -68,7 +80,10 @@ bool bltu(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const u
         TA=IA+sext(offset,0,12);
         return true;
     }
-    else return false;
+    else {
+        TA=IA+4;
+        return false;
+    }
 }
 
 bool bgeu(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
@@ -77,7 +92,10 @@ bool bgeu(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const u
         TA=IA+sext(offset,0,12);
         return true;
     }
-    else return false;
+    else {
+        TA=IA+4;
+        return false;
+    }
 }
 
 void lb(const unsigned &imm,const unsigned &rv1,unsigned &pos)
