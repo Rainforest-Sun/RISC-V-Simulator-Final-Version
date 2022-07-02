@@ -246,7 +246,7 @@ void EX()
 
 void MEM()
 {
-    if (IN_MEM.flag) do_MEM(),clk+=2;
+    if (IN_MEM.flag) do_MEM();
 }
 
 void WB()
