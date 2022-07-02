@@ -4,15 +4,6 @@
 #include <bits/stdc++.h>
 #include "stage.hpp"
 
-const char *order_name[37]={
-    "LB","LH","LW","LBU","LHU",
-    "SB","SH","SW",
-    "ADD","ADDI","SUB","LUI","AUIPC","XOR","XORI","OR","ORI","AND","ANDI",
-    "SLL","SLLI","SRL","SRLI","SRA","SRAI","SLT","SLTI","SLTU","SLTIU",
-    "BEQ","BNE","BLT","BGE","BLTU","BGEU",
-    "JAL","JALR"
-};
-
 bool ALL_BUFFER_IS_NULL() {
     return !IN_ID.flag&&!IN_EX.flag&&!IN_MEM.flag&&!IN_WB.flag;
 }

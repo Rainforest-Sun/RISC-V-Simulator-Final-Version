@@ -5,18 +5,26 @@
 #include "global.hpp"
 
 unsigned tot,succ;
-unsigned bht[4096],btb[256];//Branch History Table & Branch Target Buffer
+unsigned bht[256];//Branch History Table
+unsigned pht[256][16];//Pattern History Table
+unsigned btb[256];//Branch Target Buffer
+
+#define BRANCH_FEATURE (IA>>1 & 0xFFu)
+#define BHT_VALUE (bht[BRANCH_FEATURE])
+#define PHT_VALUE (pht[BRANCH_FEATURE][BHT_VALUE])
+#define BTB_VALUE (btb[BRANCH_FEATURE])
 
 void init_predictor()
 {
     memset(bht,0b00u,sizeof(bht));
+    memset(pht,0b00u,sizeof(pht));
     memset(btb,0u,sizeof(btb));
 }
 
 void predictPC(unsigned IA,unsigned ins)
 {
-    if (((ins & 0b1111111u)==0b1100011u) && (bht[IA & 0xfffu] & 0b10u))
-        pc=btb[IA & 0xffu];
+    if (((ins & 0b1111111u)==0b1100011u) && (PHT_VALUE & 0b10u))
+        pc=BTB_VALUE;
     else pc=IA+4;
 }
 
@@ -25,11 +33,13 @@ void update(bool is_succ,bool is_taken,unsigned IA,unsigned TA)
     ++tot;
     if (is_succ) ++succ;
     if (is_taken) {
-        if (bht[IA & 0xfffu]<0b11u) ++bht[IA & 0xfffu];
-        btb[IA & 0xffu]=TA;
+        if (PHT_VALUE<0b11u) ++PHT_VALUE;
+        BHT_VALUE = BHT_VALUE >> 1u | 0b1000u;
+        BTB_VALUE = TA;
     }
     else {
-        if (bht[IA & 0xfffu]>0b00u) --bht[IA & 0xfffu];
+        if (PHT_VALUE>0b00u) --PHT_VALUE;
+        BHT_VALUE = BHT_VALUE >> 1u;
     }
 }
 

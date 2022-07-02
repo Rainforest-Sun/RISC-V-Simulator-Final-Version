@@ -9,6 +9,7 @@ int main()
     printf("%u\n",reg[10]&255u);
     return 0;
 }
+
 /*
 const char* file_name[18]= {
     "C:\\Users\\rainforest\\Desktop\\testcases\\array_test1.data",
@@ -45,6 +46,7 @@ int main()
         succ=0;
         tot=0;
         not_do_IF=false;
+        should_not_do_IF=true;
         read_order();
         run_order();
         printf("%u %d ",reg[10]&255u,clk);
@@ -55,4 +57,5 @@ int main()
     }
     printf("ALL DATA:\n%lf %d %d\n",(double)all_succ/all_tot,all_succ,all_tot);
     return 0;
-}*/
+}
+*/

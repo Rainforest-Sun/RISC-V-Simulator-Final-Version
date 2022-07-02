@@ -36,7 +36,7 @@ void forwarding2_1(INSTRUCTION &ins)
 {
     if (IN_MEM.flag) {
         switch (IN_MEM.ins.ins_type) {
-            //LB之类的办不了
+            //LB、LH、LW、LBU、LHU应塞BUBBLE
             case LUI:case AUIPC:case JAL:case JALR:
             case ADDI:case SLTI:case SLTIU:case XORI:case ORI:
             case ANDI:case SLLI:case SRLI:case SRAI:case ADD:case SUB:case SLL:
@@ -50,7 +50,7 @@ void forwarding2_2(INSTRUCTION &ins)
 {
     if (IN_MEM.flag) {
         switch (IN_MEM.ins.ins_type) {
-            //LB之类的办不了
+            //LB、LH、LW、LBU、LHU应塞BUBBLE
             case LUI:case AUIPC:case JAL:case JALR:
             case ADDI:case SLTI:case SLTIU:case XORI:case ORI:
             case ANDI:case SLLI:case SRLI:case SRAI:case ADD:case SUB:case SLL:
