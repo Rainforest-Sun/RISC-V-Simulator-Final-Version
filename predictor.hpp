@@ -9,7 +9,7 @@ unsigned bht[4096],btb[256];//Branch History Table & Branch Target Buffer
 
 void init_predictor()
 {
-    memset(bht,0b01u,sizeof(bht));
+    memset(bht,0b00u,sizeof(bht));
     memset(btb,0u,sizeof(btb));
 }
 

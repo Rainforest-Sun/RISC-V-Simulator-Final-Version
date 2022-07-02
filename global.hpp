@@ -8,8 +8,10 @@ unsigned pc;
 unsigned reg[32];//register
 unsigned mem[500005];//memory ,note that though type of mem is unsigned, only low 8 bits legal
 bool not_do_IF=false;
+bool should_not_do_IF=true;
 bool BUBBLE=false;
 bool LAST_CYCLE_IS_BUBBLE=false;
+bool NEED_TO_CUT=false;
 const unsigned Full=-1;//all 1 with length of 32
 
 enum Ins_type {

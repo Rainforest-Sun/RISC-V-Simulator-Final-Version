@@ -6,21 +6,19 @@
 #include "stage_ins.hpp"
 #include "forwarding.hpp"
 #include "predictor.hpp"
-//pc是不是不要直接在MEM里面改？如果改了IF和MEM执行的顺序就有依赖关系了
 
-bool IF()
+bool do_IF()
 {
     unsigned s=get_ins();
     if (s==(int)0x0ff00513) return false;
     unsigned IA=get_pc();
-    //记得把二位饱和预测加到这里！！！！！！！！！！！
     predictPC(IA,s);
     IF_ID_BUFFER.flag=true;
     IF_ID_BUFFER.INS=s,IF_ID_BUFFER.IA=IA;
     return true;
 }
 
-void ID()
+void do_ID()
 {
     INSTRUCTION ins=decode_ins(IN_ID.INS);
     switch (ins.ins_type) {
@@ -43,7 +41,7 @@ void ID()
     ID_EX_BUFFER.flag=true;
 }
 
-void EX()
+void do_EX()
 {
     INSTRUCTION ins=IN_EX.ins;
     unsigned IA=IN_EX.IA;
@@ -119,7 +117,7 @@ void EX()
     EX_MEM_BUFFER.flag=true;
 }
 
-void MEM()
+void do_MEM()
 {
     INSTRUCTION ins=IN_MEM.ins;
     unsigned VAL=IN_MEM.CR;
@@ -128,9 +126,9 @@ void MEM()
     switch (ins.ins_type) {
         case JAL:case JALR:{
             if (IN_EX.IA!=TA) {
-                del_ins_now();
+                NEED_TO_CUT=true;
                 MEM_WB_BUFFER.NEED_TO_CHANGE_TA=true;
-                not_do_IF=false;
+                should_not_do_IF=false;
             }
             break;
         }
@@ -138,9 +136,9 @@ void MEM()
             bool is_succ=IN_EX.IA==TA;
             update(is_succ,ins.is_branch,IA,TA);
             if (IN_EX.IA!=TA) {
-                del_ins_now();
+                NEED_TO_CUT=true;
                 MEM_WB_BUFFER.NEED_TO_CHANGE_TA=true;
-                not_do_IF=false;
+                should_not_do_IF=false;
             }
             break;
         }
@@ -171,7 +169,7 @@ void MEM()
     MEM_WB_BUFFER.flag=true;
 }
 
-void WB()
+void do_WB()
 {
     INSTRUCTION ins=IN_WB.ins;
     unsigned VAL=IN_WB.VAL;
@@ -189,6 +187,14 @@ void syn()
     if (MEM_WB_BUFFER.NEED_TO_CHANGE_TA) {
         change_pc(MEM_WB_BUFFER.TA);
     }
+    if (NEED_TO_CUT) {
+        del_ins_now();
+        NEED_TO_CUT=false;
+    }
+    if (!should_not_do_IF) {
+        not_do_IF=false;
+        should_not_do_IF=true;
+    }
     IN_ID=IF_ID_BUFFER;
     IN_EX=ID_EX_BUFFER;
     IN_MEM=EX_MEM_BUFFER;
@@ -198,6 +204,7 @@ void syn()
     if (!IN_ID.flag) ID_EX_BUFFER.flag=false;
     if (!IN_EX.flag) EX_MEM_BUFFER.flag=false;
     if (!IN_MEM.flag) MEM_WB_BUFFER.flag=false;
+    
     if (IN_EX.flag && IN_MEM.flag) {
         switch (IN_MEM.ins.ins_type) {
             case LB:case LH:case LW:case LBU:case LHU:{
@@ -218,6 +225,33 @@ void syn()
     }
     forwarding(ID_EX_BUFFER.ins);
     forwarding(IN_EX.ins);
+}
+
+void IF()
+{
+    if (!not_do_IF && !BUBBLE) {
+        if (!do_IF()) not_do_IF=true,IF_ID_BUFFER.flag=false;
+    }
+}
+
+void ID()
+{
+    if (IN_ID.flag && !BUBBLE) do_ID();
+}
+
+void EX()
+{
+    if (IN_EX.flag && !BUBBLE) do_EX();
+}
+
+void MEM()
+{
+    if (IN_MEM.flag) do_MEM(),clk+=2;
+}
+
+void WB()
+{
+    if (IN_WB.flag) do_WB();
 }
 
 #endif
