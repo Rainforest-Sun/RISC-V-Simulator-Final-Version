@@ -6,6 +6,7 @@
 - **使用C++模拟五级流水**
 ***
 ## **五级流水设计示意图**
+![五级流水架构设计图](https://github.com/Rainforest-Sun/RISC-V-Simulator/blob/master/Pipeline%20Design.png)
 
 ***
 ### **缩写说明**
