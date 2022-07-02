@@ -31,6 +31,7 @@
 | *CR*  | Calculation Result   | ALU计算结果 |
 | *VAL* | Value                | 将写入寄存器的值 |
 | *TA*  | Target Address       | 跳转或分支指令的目标地址 |
+| *INS TYPE* | Instruction Type | 指令的类型 |
 
 **注：粗体内容为通用缩写。*
 ***

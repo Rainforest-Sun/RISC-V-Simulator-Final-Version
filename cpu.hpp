@@ -14,6 +14,7 @@ Fuc arr[] = {IF,ID,EX,MEM,WB};
 void run_order() {
     pc=0;
     init_predictor();
+    srand((int)time(NULL));
     IF_ID_BUFFER.flag=IN_ID.flag=ID_EX_BUFFER.flag=IN_EX.flag=EX_MEM_BUFFER.flag=IN_MEM.flag=MEM_WB_BUFFER.flag=MEM_WB_BUFFER.NEED_TO_CHANGE_TA=IN_WB.flag=false;
     while (true) {
         ++clk;
