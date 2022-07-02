@@ -6,6 +6,7 @@
 - **使用C++模拟五级流水**
 ***
 ## **五级流水设计示意图**
+***
 ### **缩写说明**
 > 缩写方式继承于各位助教
 #### 五级流水各个阶段
@@ -40,8 +41,8 @@
 - read.hpp
     - `read_order()`将16进制数据转为10进制并读入模拟的内存 mem 中
 - buffer.hpp
-    - 由于C++模拟五级流水时必须给 5 个 Stage 人为指定一个顺序，为保证任何顺序都是可行的，使用了 4 个 Buffer 供时钟上升沿读入数据的暂时存储
-    -  4 个 Buffer 供时钟下降沿数据的存储
+    - 由于C++模拟五级流水时必须给5个 Stage 人为指定一个顺序，为保证任何顺序都是可行的，使用了4个 Buffer 供时钟上升沿读入数据的暂时存储
+    - 4个 Buffer 供时钟下降沿数据的存储
 - instruction.hpp
     - 37个指令模拟
 - stage_ins.hpp
@@ -69,9 +70,9 @@
 ***
 ## forwarding
 ### 共实现了三种forwarding
-- **EX/MEM Buffer-->EX**
-- **MEM/WB Buffer-->EX**
-- **MEM/WB Buffer-->ID**
+- EX/MEM Buffer-->EX
+- MEM/WB Buffer-->EX
+- MEM/WB Buffer-->ID
 ***
 ## 分支预测
 - 二级分支预测
