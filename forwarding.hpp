@@ -2,7 +2,6 @@
 #define FORWARDING_HPP
 
 #include <bits/stdc++.h>
-#include "global.hpp"
 #include "buffer.hpp"
 
 void forwarding1_1(INSTRUCTION &ins)

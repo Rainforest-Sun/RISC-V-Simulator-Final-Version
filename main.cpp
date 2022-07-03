@@ -4,9 +4,9 @@
 
 int main()
 {
-    read_order();
-    run_order();
-    printf("%u\n",reg[10]&255u);
+    CPU cpu;
+    cpu.run_order();
+    printf("%u\n",cpu.regi.Load_from_reg(10)&255u);
     return 0;
 }
 
@@ -34,28 +34,31 @@ const char* file_name[18]= {
 
 int main()
 {
-    int all_succ=0,all_tot=0;
     freopen("C:\\Users\\rainforest\\Desktop\\out.txt", "w", stdout);
-    for (int i=0;i<18;++i) {
+    for (int i=5;i<6;++i) {
         FILE *p=freopen(file_name[i],"r",stdin);
-        //std::cout<<file_name[i]<<std::endl;
-        memset(reg,0u,sizeof(reg));
-        memset(mem,0u,sizeof(mem));
         pc=0;
         clk=0;
-        succ=0;
-        tot=0;
         not_do_IF=false;
         should_not_do_IF=true;
-        read_order();
-        run_order();
-        printf("%u %d ",reg[10]&255u,clk);
-        printf("%lf %d %d\n",(double)succ/tot,succ,tot);
-        all_succ+=succ,all_tot+=tot;
+        IF_ID_BUFFER.clear();
+        IN_ID.clear();
+        ID_EX_BUFFER.clear();
+        IN_EX.clear();
+        EX_MEM_BUFFER.clear();
+        IN_MEM.clear();
+        MEM_WB_BUFFER.clear();
+        IN_WB.clear();
+        BUBBLE=false;
+        LAST_CYCLE_IS_BUBBLE=false;
+        NEED_TO_CUT=false;
+        CPU cpu;
+        cpu.run_order();
+        printf("%u %d \n",cpu.regi.Load_from_reg(10)&255u,clk);
+        printf("%lf %d %d\n",(double)cpu.predictor.succ/cpu.predictor.tot,cpu.predictor.succ,cpu.predictor.tot);
         std::cin.clear();
         fclose(p);
     }
-    printf("ALL DATA:\n%lf %d %d\n",(double)all_succ/all_tot,all_succ,all_tot);
     return 0;
 }
 */

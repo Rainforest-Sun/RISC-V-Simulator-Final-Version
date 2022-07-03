@@ -4,29 +4,29 @@
 #include <bits/stdc++.h>
 #include "global.hpp"
 
-void lui(const unsigned &imm,unsigned &val)
+void lui(const u32 &imm,u32 &val)
 {
     val=sext(imm,0,19)<<12;
 }
 
-void auipc(const unsigned &imm,const unsigned &IA,unsigned &val)
+void auipc(const u32 &imm,const u32 &IA,u32 &val)
 {
     val=IA+(sext(imm,0,19)<<12);
 }
 
-void jal(const unsigned &offset,const unsigned &IA,unsigned &val,unsigned &TA)
+void jal(const u32 &offset,const u32 &IA,u32 &val,u32 &TA)
 {
     val=IA+4;
     TA=IA+sext(offset,0,20);
 }
 
-void jalr(const unsigned &offset,const unsigned &rv1,const unsigned &IA,unsigned &val,unsigned &TA)
+void jalr(const u32 &offset,const u32 &rv1,const u32 &IA,u32 &val,u32 &TA)
 {
     val=IA+4;
     TA=(rv1+sext(offset,0,11))&(~1);
 }
 
-bool beq(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
+bool beq(const u32 &rv1,const u32 &rv2,const u32 &offset,const u32 &IA,u32 &TA)
 {
     if (rv1==rv2) {
         TA=IA+sext(offset,0,12);
@@ -38,7 +38,7 @@ bool beq(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const un
     }
 }
 
-bool bne(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
+bool bne(const u32 &rv1,const u32 &rv2,const u32 &offset,const u32 &IA,u32 &TA)
 {
     if (rv1!=rv2) {
         TA=IA+sext(offset,0,12);
@@ -50,10 +50,10 @@ bool bne(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const un
     }
 }
 
-bool blt(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
+bool blt(const u32 &rv1,const u32 &rv2,const u32 &offset,const u32 &IA,u32 &TA)
 {
     if ((int)rv1<(int)rv2) {
-        TA=IA+sext(offset,0,12);//note should convert unsigned to int
+        TA=IA+sext(offset,0,12);//note should convert u32 to int
         return true;
     }
     else {
@@ -62,10 +62,10 @@ bool blt(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const un
     }
 }
 
-bool bge(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
+bool bge(const u32 &rv1,const u32 &rv2,const u32 &offset,const u32 &IA,u32 &TA)
 {
     if ((int)rv1>=(int)rv2) {
-        TA=IA+sext(offset,0,12);//note should convert unsigned to int
+        TA=IA+sext(offset,0,12);//note should convert u32 to int
         return true;
     }
     else {
@@ -74,7 +74,7 @@ bool bge(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const un
     }
 }
 
-bool bltu(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
+bool bltu(const u32 &rv1,const u32 &rv2,const u32 &offset,const u32 &IA,u32 &TA)
 {
     if (rv1<rv2) {
         TA=IA+sext(offset,0,12);
@@ -86,7 +86,7 @@ bool bltu(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const u
     }
 }
 
-bool bgeu(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const unsigned &IA,unsigned &TA)
+bool bgeu(const u32 &rv1,const u32 &rv2,const u32 &offset,const u32 &IA,u32 &TA)
 {
     if (rv1>=rv2) {
         TA=IA+sext(offset,0,12);
@@ -98,139 +98,139 @@ bool bgeu(const unsigned &rv1,const unsigned &rv2,const unsigned &offset,const u
     }
 }
 
-void lb(const unsigned &imm,const unsigned &rv1,unsigned &pos)
+void lb(const u32 &imm,const u32 &rv1,u32 &pos)
 {
     pos=rv1+sext(imm,0,11);
 }
 
-void lh(const unsigned &imm,const unsigned &rv1,unsigned &pos)
+void lh(const u32 &imm,const u32 &rv1,u32 &pos)
 {
     pos=rv1+sext(imm,0,11);
 }
 
-void lw(const unsigned &imm,const unsigned &rv1,unsigned &pos)
+void lw(const u32 &imm,const u32 &rv1,u32 &pos)
 {
     pos=rv1+sext(imm,0,11);
 }
 
-void lbu(const unsigned &imm,const unsigned &rv1,unsigned &pos)
+void lbu(const u32 &imm,const u32 &rv1,u32 &pos)
 {
     pos=rv1+sext(imm,0,11);
 }
 
-void lhu(const unsigned &imm,const unsigned &rv1,unsigned &pos)
+void lhu(const u32 &imm,const u32 &rv1,u32 &pos)
 {
     pos=rv1+sext(imm,0,11);
 }
 
-void sb(const unsigned &imm,const unsigned &rv1,unsigned &pos)
+void sb(const u32 &imm,const u32 &rv1,u32 &pos)
 {
     pos=rv1+sext(imm,0,11);
 }
     
-void sh(const unsigned &imm,const unsigned &rv1,unsigned &pos)
+void sh(const u32 &imm,const u32 &rv1,u32 &pos)
 {
     pos=rv1+sext(imm,0,11);
 }
 
-void sw(const unsigned &imm,const unsigned &rv1,unsigned &pos)
+void sw(const u32 &imm,const u32 &rv1,u32 &pos)
 {
     pos=rv1+sext(imm,0,11);
 }
 
-void addi(const unsigned &imm,const unsigned &rv1,unsigned &val)
+void addi(const u32 &imm,const u32 &rv1,u32 &val)
 {
     val=rv1+sext(imm,0,11);
 }
 
-void slti(const unsigned &rv1,const unsigned &imm,unsigned &val)
+void slti(const u32 &rv1,const u32 &imm,u32 &val)
 {
     val=(((int)rv1<(int)sext(imm,0,11))?1:0);
 }
 
-void sltiu(const unsigned &rv1,const unsigned &imm,unsigned &val)
+void sltiu(const u32 &rv1,const u32 &imm,u32 &val)
 {
     val=((rv1<sext(imm,0,11))?1:0);
 }
 
-void xori(const unsigned &rv1,const unsigned &imm,unsigned &val)
+void xori(const u32 &rv1,const u32 &imm,u32 &val)
 {
     val=rv1^sext(imm,0,11);
 }
 
-void ori(const unsigned &rv1,const unsigned &imm,unsigned &val)
+void ori(const u32 &rv1,const u32 &imm,u32 &val)
 {
     val=rv1|sext(imm,0,11);
 }
 
-void andi(const unsigned &rv1,const unsigned &imm,unsigned &val)
+void andi(const u32 &rv1,const u32 &imm,u32 &val)
 {
     val=rv1&sext(imm,0,11);
 }
 
-void slli(const unsigned &rv1,const unsigned &imm,unsigned &val)
+void slli(const u32 &rv1,const u32 &imm,u32 &val)
 {
     val=rv1<<imm;
 }
 
-void srli(const unsigned &rv1,const unsigned &imm,unsigned &val)
+void srli(const u32 &rv1,const u32 &imm,u32 &val)
 {
     val=rv1>>imm;
 }
 
-void srai(const unsigned &rv1,const unsigned &imm,unsigned &val)
+void srai(const u32 &rv1,const u32 &imm,u32 &val)
 {
-    unsigned move_bit=imm;
+    u32 move_bit=imm;
     val=sext(rv1>>move_bit,0,31-move_bit);
 }
 
-void add(const unsigned &rv1,const unsigned &rv2,unsigned &val)
+void add(const u32 &rv1,const u32 &rv2,u32 &val)
 {
     val=rv1+rv2;
 }
 
-void sub(const unsigned &rv1,const unsigned &rv2,unsigned &val)
+void sub(const u32 &rv1,const u32 &rv2,u32 &val)
 {
     val=rv1-rv2;
 }
 
-void sll(const unsigned &rv1,const unsigned &rv2,unsigned &val)
+void sll(const u32 &rv1,const u32 &rv2,u32 &val)
 {
     val=rv1<<get_bit(rv2,0,4);
 }
 
-void slt(const unsigned &rv1,const unsigned &rv2,unsigned &val)
+void slt(const u32 &rv1,const u32 &rv2,u32 &val)
 {
     val=(((int)rv1<(int)rv2)?1:0);
 }
 
-void sltu(const unsigned &rv1,const unsigned &rv2,unsigned &val)
+void sltu(const u32 &rv1,const u32 &rv2,u32 &val)
 {
     val=((rv1<rv2)?1:0);
 }
 
-void xor_(const unsigned &rv1,const unsigned &rv2,unsigned &val)
+void xor_(const u32 &rv1,const u32 &rv2,u32 &val)
 {
     val=rv1^rv2;
 }
 
-void srl(const unsigned &rv1,const unsigned &rv2,unsigned &val)
+void srl(const u32 &rv1,const u32 &rv2,u32 &val)
 {
     val=rv1>>get_bit(rv2,0,4);
 }
 
-void sra(const unsigned &rv1,const unsigned &rv2,unsigned &val)
+void sra(const u32 &rv1,const u32 &rv2,u32 &val)
 {
-    unsigned move_bit=get_bit(rv2,0,4);
+    u32 move_bit=get_bit(rv2,0,4);
     val=sext(rv1>>move_bit,0,31-move_bit);
 }
 
-void or_(const unsigned &rv1,const unsigned &rv2,unsigned &val)
+void or_(const u32 &rv1,const u32 &rv2,u32 &val)
 {
     val=rv1|rv2;
 }
 
-void and_(const unsigned &rv1,const unsigned &rv2,unsigned &val)
+void and_(const u32 &rv1,const u32 &rv2,u32 &val)
 {
     val=rv1&rv2;
 }
