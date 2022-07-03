@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include "read.hpp"
 #include "cpu.hpp"
 
 int main()
