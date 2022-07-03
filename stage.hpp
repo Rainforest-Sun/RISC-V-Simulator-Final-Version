@@ -237,10 +237,7 @@ public:
     }
     void exe()
     {
-        if (IN_EX.flag && !BUBBLE) {
-            do_EX();
-            //std::cout<<clk<<" "<<EX_MEM_BUFFER.IA<<" "<<order_name[EX_MEM_BUFFER.ins.ins_type]<<std::endl;
-        }
+        if (IN_EX.flag && !BUBBLE) do_EX();
     }
 };
 

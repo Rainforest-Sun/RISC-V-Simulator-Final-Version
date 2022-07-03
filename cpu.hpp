@@ -84,6 +84,7 @@ public:
         forwarding(ID_EX_BUFFER.ins,IN_WB,IN_MEM);
         forwarding(IN_EX.ins,IN_WB,IN_MEM);
     }
+    
     void run_order() {
         pc=0;
         srand((int)time(NULL));
@@ -107,7 +108,10 @@ public:
             }
             else LAST_CYCLE_IS_BUBBLE=false;
             regi.set_reg0();
-            if (not_do_IF && ALL_BUFFER_IS_NULL()) break;
+            if (not_do_IF && ALL_BUFFER_IS_NULL()) {
+                memory.clear();
+                break;
+            }
         }
     }   
 

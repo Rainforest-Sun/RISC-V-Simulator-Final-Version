@@ -43,6 +43,11 @@ public:
     {
         return ((u32)mem[pc]|(u32)mem[pc+1]<<8|(u32)mem[pc+2]<<16|(u32)mem[pc+3]<<24);
     }
+
+    void clear()
+    {
+        memset(mem,(u8)0,sizeof(mem));
+    }
 };
 
 #endif //RISC-V Simulator MEMORY
