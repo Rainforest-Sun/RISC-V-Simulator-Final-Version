@@ -2,7 +2,7 @@
 #define CPU_HPP
 
 #include <bits/stdc++.h>
-#include "Stage.hpp"
+#include "stage.hpp"
 #include "Memory.hpp"
 #include "Register.hpp"
 
