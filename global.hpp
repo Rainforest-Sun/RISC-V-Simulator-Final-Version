@@ -52,6 +52,16 @@ inline u32 get_bit(const u32 &x,const u32 &l,const u32 &r)//get x from l to r
     return (((Full>>(31-r+l))<<l)&x)>>l;
 }
 
+inline u32 get_pc()
+{
+    return pc;
+}
+
+void change_pc(const u32 &TA)
+{
+    pc=TA;
+}
+
 const char *order_name[38]={
     "LB","LH","LW","LBU","LHU",
     "SB","SH","SW",

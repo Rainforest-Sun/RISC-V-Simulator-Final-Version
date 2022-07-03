@@ -2,13 +2,14 @@
 #define MEMORY_HPP
 
 #include <bits/stdc++.h>
-#include "global.hpp"
+#include "Global.hpp"
 using u8=unsigned char;
 using u32=unsigned int;
 
 class Memory {
-public:
+
     u8 mem[500005];
+    
     unsigned hex_to_dec(const std::string &s) {
         unsigned res=0;
         for (int i=0;i<s.length();++i) {

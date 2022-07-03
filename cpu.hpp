@@ -2,7 +2,7 @@
 #define CPU_HPP
 
 #include <bits/stdc++.h>
-#include "stage.hpp"
+#include "Stage.hpp"
 #include "Memory.hpp"
 #include "Register.hpp"
 
@@ -17,10 +17,29 @@ public:
     StageEX EX;
     StageMEM MEM;
     StageWB WB;
-    //typedef void(* Fuc)();
-    //Fuc arr[] = {StageIF.IF,StageID.ID,StageEX.EX,StageMEM.MEM,StageWB.WB};
-    CPU():memory(),regi(),predictor(),IF(memory,predictor,IF_ID_BUFFER),ID(IN_ID,ID_EX_BUFFER,regi),EX(IN_EX,EX_MEM_BUFFER),
-    MEM(IN_MEM,MEM_WB_BUFFER,predictor,memory),WB(IN_WB,regi){}
+    IF_ID_BUFFER_CLASS IF_ID_BUFFER,IN_ID;
+    ID_EX_BUFFER_CLASS ID_EX_BUFFER,IN_EX;
+    EX_MEM_BUFFER_CLASS EX_MEM_BUFFER,IN_MEM;
+    MEM_WB_BUFFER_CLASS MEM_WB_BUFFER,IN_WB;
+
+    CPU():IF_ID_BUFFER(),IN_ID(),ID_EX_BUFFER(),IN_EX(),EX_MEM_BUFFER(),IN_MEM(),MEM_WB_BUFFER(),IN_WB(),
+    memory(),regi(),predictor(),IF(memory,predictor,IF_ID_BUFFER),ID(IN_ID,ID_EX_BUFFER,IN_WB,regi),EX(IN_EX,EX_MEM_BUFFER),
+    MEM(IN_EX,IN_MEM,MEM_WB_BUFFER,predictor,memory),WB(IN_WB,regi){}
+
+    bool ALL_BUFFER_IS_NULL() {
+        return !IN_ID.flag&&!IN_EX.flag&&!IN_MEM.flag&&!IN_WB.flag;
+    }
+
+    void del_ins_now()
+    {
+        IF_ID_BUFFER.flag=IN_ID.flag=ID_EX_BUFFER.flag=IN_EX.flag=EX_MEM_BUFFER.flag=IN_MEM.flag=false;
+    }
+
+    void bubble()
+    {
+        if (!LAST_CYCLE_IS_BUBBLE) BUBBLE=true;
+    }
+
     void syn()
     {
         if (MEM_WB_BUFFER.NEED_TO_CHANGE_TA) {
@@ -62,27 +81,26 @@ public:
                 }
             }
         }
-        forwarding(ID_EX_BUFFER.ins);
-        forwarding(IN_EX.ins);
+        forwarding(ID_EX_BUFFER.ins,IN_WB,IN_MEM);
+        forwarding(IN_EX.ins,IN_WB,IN_MEM);
     }
     void run_order() {
         pc=0;
-        //srand((int)time(NULL));
+        srand((int)time(NULL));
+        int arr[5]={1,2,3,4,5};
         while (true) {
             ++clk;
-            if (clk==139) {
-                int xx=123;
-                --xx;
-            }
             syn();
-            //std::random_shuffle(arr,arr+4);
-            //for (int i=0;i<=4;++i) arr[i]();
-            MEM.exe();
-            IF.exe();
-            ID.exe();
-            EX.exe();
-            
-            WB.exe();
+            std::random_shuffle(arr,arr+4);
+            for (int i=0;i<=4;++i) {
+                switch (arr[i]) {
+                    case 1:IF.exe();break;
+                    case 2:ID.exe();break;
+                    case 3:EX.exe();break;
+                    case 4:MEM.exe();break;
+                    case 5:WB.exe();break;
+                }
+            }
             if (BUBBLE) {
                 BUBBLE=false;
                 LAST_CYCLE_IS_BUBBLE=true;

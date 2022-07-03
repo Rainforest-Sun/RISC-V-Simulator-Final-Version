@@ -34,30 +34,20 @@ const char* file_name[18]= {
 int main()
 {
     freopen("C:\\Users\\rainforest\\Desktop\\out.txt", "w", stdout);
-    for (int i=5;i<6;++i) {
-        FILE *p=freopen(file_name[i],"r",stdin);
-        pc=0;
-        clk=0;
-        not_do_IF=false;
-        should_not_do_IF=true;
-        IF_ID_BUFFER.clear();
-        IN_ID.clear();
-        ID_EX_BUFFER.clear();
-        IN_EX.clear();
-        EX_MEM_BUFFER.clear();
-        IN_MEM.clear();
-        MEM_WB_BUFFER.clear();
-        IN_WB.clear();
-        BUBBLE=false;
-        LAST_CYCLE_IS_BUBBLE=false;
-        NEED_TO_CUT=false;
-        CPU cpu;
-        cpu.run_order();
-        printf("%u %d \n",cpu.regi.Load_from_reg(10)&255u,clk);
-        printf("%lf %d %d\n",(double)cpu.predictor.succ/cpu.predictor.tot,cpu.predictor.succ,cpu.predictor.tot);
-        std::cin.clear();
-        fclose(p);
-    }
+    FILE *p=freopen(file_name[17],"r",stdin);
+    pc=0;
+    clk=0;
+    not_do_IF=false;
+    should_not_do_IF=true;
+    BUBBLE=false;
+    LAST_CYCLE_IS_BUBBLE=false;
+    NEED_TO_CUT=false;
+    CPU cpu;
+    cpu.run_order();
+    printf("%u %d \n",cpu.regi.Load_from_reg(10)&255u,clk);
+    printf("%lf %d %d\n",(double)cpu.predictor.succ/cpu.predictor.tot,cpu.predictor.succ,cpu.predictor.tot);
+    std::cin.clear();
+    fclose(p);
     return 0;
 }
 */

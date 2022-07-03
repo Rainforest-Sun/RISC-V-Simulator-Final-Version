@@ -2,7 +2,7 @@
 #define BUFFER_HPP
 
 #include <bits/stdc++.h>
-#include "global.hpp"
+#include "Global.hpp"
 
 struct IF_ID_BUFFER_CLASS {
     u32 IA,INS;
@@ -12,7 +12,7 @@ struct IF_ID_BUFFER_CLASS {
     {
         IA=INS=0,flag=false;
     }
-} IF_ID_BUFFER,IN_ID;
+};
 
 struct ID_EX_BUFFER_CLASS {
     INSTRUCTION ins;
@@ -24,7 +24,7 @@ struct ID_EX_BUFFER_CLASS {
         ins.clear();
         IA=0,flag=false;
     }
-} ID_EX_BUFFER,IN_EX;
+};
 
 struct EX_MEM_BUFFER_CLASS {
     INSTRUCTION ins;
@@ -37,7 +37,7 @@ struct EX_MEM_BUFFER_CLASS {
         TA=CR=IA=0;
         flag=false;
     }
-} EX_MEM_BUFFER,IN_MEM;
+};
 
 struct MEM_WB_BUFFER_CLASS {
     INSTRUCTION ins;
@@ -50,10 +50,6 @@ struct MEM_WB_BUFFER_CLASS {
         VAL=IA=TA=0;
         flag=NEED_TO_CHANGE_TA=false;
     }
-} MEM_WB_BUFFER,IN_WB;
-
-bool ALL_BUFFER_IS_NULL() {
-    return !IN_ID.flag&&!IN_EX.flag&&!IN_MEM.flag&&!IN_WB.flag;
-}
+};
 
 #endif //RISC-V Simulator BUFFER

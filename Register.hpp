@@ -2,7 +2,7 @@
 #define REGISTER_HPP
 
 #include <bits/stdc++.h>
-#include "global.hpp"
+#include "Global.hpp"
 using u8=unsigned char;
 using u32=unsigned int;
 
