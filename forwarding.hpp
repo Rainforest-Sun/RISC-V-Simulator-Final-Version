@@ -2,7 +2,7 @@
 #define FORWARDING_HPP
 
 #include <bits/stdc++.h>
-#include "Buffer.hpp"
+#include "buffer.hpp"
 
 void forwarding1_1(INSTRUCTION &ins,MEM_WB_BUFFER_CLASS &IN_WB)
 {

@@ -2,7 +2,7 @@
 #define BUFFER_HPP
 
 #include <bits/stdc++.h>
-#include "Global.hpp"
+#include "global.hpp"
 
 struct IF_ID_BUFFER_CLASS {
     u32 IA,INS;

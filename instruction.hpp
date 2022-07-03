@@ -2,7 +2,7 @@
 #define INSTRUCTION_HPP
 
 #include <bits/stdc++.h>
-#include "Global.hpp"
+#include "global.hpp"
 
 void lui(const u32 &imm,u32 &val)
 {

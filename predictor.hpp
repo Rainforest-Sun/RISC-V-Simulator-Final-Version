@@ -2,7 +2,7 @@
 #define PREDICTOR_HPP
 
 #include <bits/stdc++.h>
-#include "Global.hpp"
+#include "global.hpp"
 
 class Predictor{
 public:

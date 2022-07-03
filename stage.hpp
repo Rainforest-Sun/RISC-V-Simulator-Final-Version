@@ -2,9 +2,9 @@
 #define STAGE_HPP
 
 #include <bits/stdc++.h>
-#include "Instruction.hpp"
-#include "Forwarding.hpp"
-#include "Predictor.hpp"
+#include "instruction.hpp"
+#include "forwarding.hpp"
+#include "predictor.hpp"
 #include "Memory.hpp"
 #include "Register.hpp"
 
